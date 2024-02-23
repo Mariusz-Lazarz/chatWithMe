@@ -3,6 +3,7 @@ import "../components/ui/globals.css";
 import Navbar from "@/components/ui/Navbar";
 import { inter } from "@/components/ui/fonts";
 import { ThemeProvider } from "@/components/theme-provider";
+import Container from "@/components/ui/Container";
 
 export const metadata: Metadata = {
   title: "Chat with me app",
@@ -16,10 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar />
-          {children}
+          <Container>{children}</Container>
         </ThemeProvider>
       </body>
     </html>
