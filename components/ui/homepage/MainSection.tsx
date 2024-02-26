@@ -52,14 +52,14 @@ const Section = ({
     <section className={flexClassName} key={key}>
       <div className="flex flex-col items-center text-center md:block md:text-start">
         <div className="w-14 md:w-28 h-[1px] bg-red-500"></div>
-        <h2 className="text-2xl md:text-4xl my-4">{title}</h2>
-        <p className="text-md md:text-2xl md:text-start">{description}</p>
+        <h2 className="text-2xl md:text-3xl my-4">{title}</h2>
+        <p className="text-md md:text-xl md:text-start">{description}</p>
       </div>
       <Image
         src={image}
         alt="ai-logo"
-        width={600}
-        height={500}
+        width={500}
+        height={400}
         className="hidden lg:block"
       />
       <Image

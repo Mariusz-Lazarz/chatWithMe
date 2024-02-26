@@ -5,16 +5,14 @@ import MainSection from "@/components/ui/homepage/MainSection";
 
 export default function Home() {
   return (
-    <Container>
-      <main>
-        <section>
-          <Title />
-        </section>
-        <section>
-          <NavButtons />
-        </section>
-        <MainSection />
-      </main>
-    </Container>
+    <main>
+      <section>
+        <Title />
+      </section>
+      <section>
+        <NavButtons />
+      </section>
+      <MainSection />
+    </main>
   );
 }

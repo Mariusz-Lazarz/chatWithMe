@@ -12,7 +12,7 @@ export default function Navbar() {
 
   return (
     <header className="header sticky top-0 z-50 bg-background">
-      <Container>
+      <div className="px-4 md:px-12 py-2 container text-center">
         <nav className="flex justify-between items-center">
           <Logo />
           <div className="flex items-center gap-1 md:gap-2">
@@ -42,7 +42,7 @@ export default function Navbar() {
             {logged && <ProfileAvatar />}
           </div>
         </nav>
-      </Container>
+      </div>
     </header>
   );
 }

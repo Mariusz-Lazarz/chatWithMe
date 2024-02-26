@@ -3,3 +3,11 @@ export type MainSection = {
   description: string;
   image: string;
 };
+
+export type Plan = {
+  tier: string;
+  description: string;
+  price: string;
+  period: string | null;
+  features: string[];
+};
