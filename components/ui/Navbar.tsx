@@ -5,10 +5,12 @@ import { ModeToggle } from "@/components/ui/ModeToggle";
 import LanguageDropdown from "@/components/ui/LanguageDropdown";
 import ProfileAvatar from "@/components/ui/ProfileAvatar";
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
-import Container from "@/components/ui/Container";
+import { authOptions } from "@/auth";
+import { getServerSession } from "next-auth";
 
-export default function Navbar() {
-  const logged = true;
+export default async function Navbar() {
+  const session = await getServerSession(authOptions);
+  console.log(session);
 
   return (
     <header className="header sticky top-0 z-50 bg-background">
@@ -16,7 +18,7 @@ export default function Navbar() {
         <nav className="flex justify-between items-center">
           <Logo />
           <div className="flex items-center gap-1 md:gap-2">
-            {logged && (
+            {session && (
               <Link href="#">
                 <Button
                   variant="outline"
@@ -27,19 +29,14 @@ export default function Navbar() {
                 </Button>
               </Link>
             )}
-            {logged && <LanguageDropdown />}
-            {!logged && (
+            {session && <LanguageDropdown />}
+            {!session && (
               <Link href="#" className="text-sm">
                 Pricing
               </Link>
             )}
             <ModeToggle />
-            {!logged && (
-              <Button size="sm" variant="outline" className="text-sm border">
-                Sign in
-              </Button>
-            )}
-            {logged && <ProfileAvatar />}
+            <ProfileAvatar session={session} />
           </div>
         </nav>
       </div>

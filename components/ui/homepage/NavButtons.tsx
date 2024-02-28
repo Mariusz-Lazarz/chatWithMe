@@ -10,7 +10,7 @@ export default function NavButtons() {
         <ArrowRightIcon className="h-[1rem] w-[1rem]" />
       </Link>
       <Button variant="destructive">
-        <Link href="#">Get started</Link>
+        <Link href="/auth/login">Get started</Link>
       </Button>
     </div>
   );

@@ -4,6 +4,7 @@ import Navbar from "@/components/ui/Navbar";
 import { inter } from "@/components/ui/fonts";
 import { ThemeProvider } from "@/components/theme-provider";
 import Container from "@/components/ui/Container";
+import ClientProviders from "@/components/ui/ClientProviders";
 
 export const metadata: Metadata = {
   title: "Chat with me app",
@@ -16,13 +17,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className}`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navbar />
-          <Container>{children}</Container>
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClientProviders>
+      <html lang="en" suppressHydrationWarning>
+        <body className={`${inter.className}`}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <Navbar />
+            <Container>{children}</Container>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClientProviders>
   );
 }

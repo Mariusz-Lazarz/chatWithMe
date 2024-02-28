@@ -32,13 +32,11 @@ export default function MainSection() {
 }
 
 const Section = ({
-  key,
   index,
   title,
   description,
   image,
 }: {
-  key: string;
   index: number;
   title: string;
   description: string;
@@ -49,7 +47,7 @@ const Section = ({
   } justify-center items-center gap-20`;
 
   return (
-    <section className={flexClassName} key={key}>
+    <section className={flexClassName}>
       <div className="flex flex-col items-center text-center md:block md:text-start">
         <div className="w-14 md:w-28 h-[1px] bg-red-500"></div>
         <h2 className="text-2xl md:text-3xl my-4">{title}</h2>
