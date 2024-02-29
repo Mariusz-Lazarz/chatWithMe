@@ -1,8 +1,15 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
+import { db } from "@/lib/firebase";
+import { addDoc, collection, doc, setDoc, getDoc } from "firebase/firestore";
+import { useSession } from "next-auth/react";
 
 export default function NavButtons() {
+  const { data: session } = useSession();
+
   return (
     <div className="flex justify-center items-center gap-4">
       <Link href="/pricing" className="flex items-center gap-1">

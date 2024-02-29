@@ -5,7 +5,7 @@ import { ModeToggle } from "@/components/ui/ModeToggle";
 import LanguageDropdown from "@/components/ui/LanguageDropdown";
 import ProfileAvatar from "@/components/ui/ProfileAvatar";
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
-import { authOptions } from "@/auth";
+import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 
 export default async function Navbar() {

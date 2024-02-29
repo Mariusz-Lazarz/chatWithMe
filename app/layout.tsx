@@ -5,6 +5,7 @@ import { inter } from "@/components/ui/fonts";
 import { ThemeProvider } from "@/components/theme-provider";
 import Container from "@/components/ui/Container";
 import ClientProviders from "@/components/ui/ClientProviders";
+import FirebaseAuthProvider from "@/components/FirebaseAuthProvider";
 
 export const metadata: Metadata = {
   title: "Chat with me app",
@@ -20,10 +21,12 @@ export default function RootLayout({
     <ClientProviders>
       <html lang="en" suppressHydrationWarning>
         <body className={`${inter.className}`}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Navbar />
-            <Container>{children}</Container>
-          </ThemeProvider>
+          <FirebaseAuthProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <Navbar />
+              <Container>{children}</Container>
+            </ThemeProvider>
+          </FirebaseAuthProvider>
         </body>
       </html>
     </ClientProviders>
