@@ -6,11 +6,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { CheckIcon } from "@heroicons/react/24/solid";
 import { Plan } from "@/lib/definitions";
-export default function Pricing() {
+import PricingButton from "./PricingButton";
+import RegisterButton from "../register/RegisterButton";
+export default function PricingCard({ type }: { type: string }) {
   const PLANS: Plan[] = [
     {
       tier: "Free",
@@ -32,6 +32,7 @@ export default function Pricing() {
       tier: "Gold",
       description: "Enhanced features for serious users.",
       price: "$9.99",
+      priceCode: "price_1OpoeLKMVLh6KfHwOntUgwG8",
       period: "month",
       features: [
         "Unlimited messages in chats.",
@@ -48,6 +49,7 @@ export default function Pricing() {
       tier: "Diamond",
       description: "Premium access for experts.",
       price: "$29.99",
+      priceCode: "price_1OpoeyKMVLh6KfHw2XP8did6",
       period: "month",
       features: [
         "All Gold Plan features plus:",
@@ -63,13 +65,6 @@ export default function Pricing() {
   ];
   return (
     <>
-      <h1 className="text-3xl text-center md:text-5xl font-extrabold py-10">
-        The perfect price, no matter who you are.
-      </h1>
-      <p className="opacity-70 text-md md:text-xl text-center">
-        We`re almost certain we have a plan that perfectly meets all of your
-        requirements.
-      </p>
       <div className="flex justify-center flex-col md:flex-row gap-4 my-20">
         {PLANS.map((plan, i) => (
           <Card key={i} className={`flex-1 ${i === 1 ? "md:scale-110" : ""}`}>
@@ -92,9 +87,11 @@ export default function Pricing() {
               ))}
             </CardContent>
             <CardFooter className="flex">
-              <Button variant="default" className="flex-1">
-                <Link href="#">Get started</Link>
-              </Button>
+              {type === "pricing" ? (
+                <PricingButton />
+              ) : plan.tier !== "Free" ? (
+                <RegisterButton priceCode={plan.priceCode} />
+              ) : null}
             </CardFooter>
           </Card>
         ))}

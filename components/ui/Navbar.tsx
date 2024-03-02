@@ -10,7 +10,6 @@ import { getServerSession } from "next-auth";
 
 export default async function Navbar() {
   const session = await getServerSession(authOptions);
-  console.log(session);
 
   return (
     <header className="header sticky top-0 z-50 bg-background">

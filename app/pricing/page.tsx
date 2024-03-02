@@ -1,5 +1,11 @@
-import Pricing from "@/components/ui/pricing/Pricing";
+import PricingCard from "@/components/ui/pricing/PricingCard";
+import PricingTitle from "@/components/ui/pricing/PricingTitle";
 
 export default function Home() {
-  return <Pricing></Pricing>;
+  return (
+    <>
+      <PricingTitle />
+      <PricingCard type="pricing" />
+    </>
+  );
 }

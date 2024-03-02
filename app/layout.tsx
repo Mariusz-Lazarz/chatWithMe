@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Container from "@/components/ui/Container";
 import ClientProviders from "@/components/ui/ClientProviders";
 import FirebaseAuthProvider from "@/components/FirebaseAuthProvider";
+import SubscriptionProvider from "@/components/SubscriptionProvider";
 
 export const metadata: Metadata = {
   title: "Chat with me app",
@@ -22,10 +23,16 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body className={`${inter.className}`}>
           <FirebaseAuthProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <Navbar />
-              <Container>{children}</Container>
-            </ThemeProvider>
+            <SubscriptionProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+              >
+                <Navbar />
+                <Container>{children}</Container>
+              </ThemeProvider>
+            </SubscriptionProvider>
           </FirebaseAuthProvider>
         </body>
       </html>

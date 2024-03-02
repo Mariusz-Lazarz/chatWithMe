@@ -8,6 +8,7 @@ export type Plan = {
   tier: string;
   description: string;
   price: string;
+  priceCode?: string;
   period: string | null;
   features: string[];
 };
