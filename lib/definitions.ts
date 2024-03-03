@@ -12,3 +12,16 @@ export type Plan = {
   period: string | null;
   features: string[];
 };
+
+export type SubscriptionState = {
+  status: "active" | "inactive";
+  role: string | null;
+  tier: string | null;
+  isLoading: boolean;
+  setSubscription: (
+    status: SubscriptionState["status"],
+    role: string,
+    tier: string
+  ) => void;
+  clearSubscription: () => void;
+};

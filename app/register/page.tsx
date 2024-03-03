@@ -5,7 +5,7 @@ export default function RegisterPage() {
   return (
     <>
       <RegisterTitle />
-      <PricingCard />
+      <PricingCard type="register" />
     </>
   );
 }

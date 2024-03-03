@@ -90,7 +90,7 @@ export default function PricingCard({ type }: { type: string }) {
               {type === "pricing" ? (
                 <PricingButton />
               ) : plan.tier !== "Free" ? (
-                <RegisterButton priceCode={plan.priceCode} />
+                <RegisterButton priceCode={plan.priceCode} tier={plan.tier} />
               ) : null}
             </CardFooter>
           </Card>

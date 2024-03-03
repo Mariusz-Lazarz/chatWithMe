@@ -5,14 +5,20 @@ import { Button } from "../button";
 import { useState } from "react";
 import { db } from "@/lib/firebase";
 import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
+import useSubscriptionStore from "@/store/subscriptionStore";
+import LoadingSpinner from "../LoadingSpinner";
 
 export default function RegisterButton({
   priceCode,
+  tier,
 }: {
   priceCode: string | undefined;
+  tier: string;
 }) {
   const { data: session } = useSession();
   const [loading, setIsLoading] = useState(false);
+  const { status, isLoading } = useSubscriptionStore();
+  console.log(status);
   const createCheckoutSession = async () => {
     if (!session?.user?.id) return;
 
@@ -24,6 +30,10 @@ export default function RegisterButton({
           price: priceCode,
           success_url: window.location.origin,
           cancel_url: window.location.origin + "/register",
+          metadata: {
+            role: "pro",
+            tier: tier,
+          },
         }
       );
 
@@ -51,12 +61,13 @@ export default function RegisterButton({
     <Button
       variant="default"
       className="flex-1"
-      onClick={() => createCheckoutSession()}
+      onClick={createCheckoutSession}
+      disabled={loading || isLoading} // Przycisk nieaktywny, gdy trwa operacja ładowania
     >
-      {loading ? (
-        <div className="flex justify-center items-center">
-          <div className="animate-spin rounded-full h-6 w-6 border-2 border-gray-300 border-t-gray-900"></div>
-        </div>
+      {loading || isLoading ? ( // Wyświetlanie spinnera gdy trwa ładowanie lokalne lub globalne
+        <LoadingSpinner />
+      ) : status === "active" ? ( // Decyzja o treści przycisku na podstawie statusu subskrypcji
+        "Manage your subscription"
       ) : (
         "Sign In"
       )}
