@@ -17,12 +17,10 @@ export type SubscriptionState = {
   status: "active" | undefined | "inactive";
   role: string | null;
   tier: string | null;
-  isLoading: boolean;
   setSubscription: (
     status: SubscriptionState["status"],
     role: string,
     tier: string
   ) => void;
   clearSubscription: () => void;
-  setIsLoading: (loading: boolean) => void;
 };
