@@ -66,9 +66,9 @@ export default function RegisterButton({
       {loading ? (
         <LoadingSpinner />
       ) : status === "active" ? (
-        <button>Aktywna subskrypcja</button>
+        "Manage your subscription"
       ) : status === "inactive" ? (
-        <button>Nieaktywna subskrypcja</button>
+        "Sign In"
       ) : (
         <LoadingSpinner />
       )}
