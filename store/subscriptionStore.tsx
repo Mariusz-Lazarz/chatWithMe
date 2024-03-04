@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { SubscriptionState } from "@/lib/definitions";
 
 const useSubscriptionStore = create<SubscriptionState>((set) => ({
-  status: "inactive",
+  status: undefined,
   role: null,
   tier: null,
   isLoading: true,
@@ -10,6 +10,7 @@ const useSubscriptionStore = create<SubscriptionState>((set) => ({
     set({ status, role, tier, isLoading: false }),
   clearSubscription: () =>
     set({ status: "inactive", role: null, tier: null, isLoading: false }),
+  setIsLoading: (loading) => set({ isLoading: loading }),
 }));
 
 export default useSubscriptionStore;

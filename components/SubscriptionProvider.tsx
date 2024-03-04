@@ -12,15 +12,10 @@ export default function SubscriptionProvider({
   children: React.ReactNode;
 }) {
   const { data: session } = useSession();
-  const setSubscription = useSubscriptionStore(
-    (state) => state.setSubscription
-  );
-  const clearSubscription = useSubscriptionStore(
-    (state) => state.clearSubscription
-  );
+  const { setSubscription, clearSubscription } = useSubscriptionStore();
+
   useEffect(() => {
     if (!session || !session.user.id) {
-      clearSubscription();
       return;
     }
 

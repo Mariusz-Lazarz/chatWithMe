@@ -14,7 +14,7 @@ export type Plan = {
 };
 
 export type SubscriptionState = {
-  status: "active" | "inactive";
+  status: "active" | undefined | "inactive";
   role: string | null;
   tier: string | null;
   isLoading: boolean;
@@ -24,4 +24,5 @@ export type SubscriptionState = {
     tier: string
   ) => void;
   clearSubscription: () => void;
+  setIsLoading: (loading: boolean) => void;
 };

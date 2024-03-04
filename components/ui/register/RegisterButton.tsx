@@ -17,8 +17,7 @@ export default function RegisterButton({
 }) {
   const { data: session } = useSession();
   const [loading, setIsLoading] = useState(false);
-  const { status, isLoading } = useSubscriptionStore();
-  console.log(status);
+  const { status } = useSubscriptionStore();
   const createCheckoutSession = async () => {
     if (!session?.user?.id) return;
 
@@ -62,14 +61,16 @@ export default function RegisterButton({
       variant="default"
       className="flex-1"
       onClick={createCheckoutSession}
-      disabled={loading || isLoading} // Przycisk nieaktywny, gdy trwa operacja ładowania
+      disabled={loading || status === undefined}
     >
-      {loading || isLoading ? ( // Wyświetlanie spinnera gdy trwa ładowanie lokalne lub globalne
+      {loading ? (
         <LoadingSpinner />
-      ) : status === "active" ? ( // Decyzja o treści przycisku na podstawie statusu subskrypcji
-        "Manage your subscription"
+      ) : status === "active" ? (
+        <button>Aktywna subskrypcja</button>
+      ) : status === "inactive" ? (
+        <button>Nieaktywna subskrypcja</button>
       ) : (
-        "Sign In"
+        <LoadingSpinner />
       )}
     </Button>
   );
