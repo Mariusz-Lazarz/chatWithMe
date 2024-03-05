@@ -15,8 +15,8 @@ export type Plan = {
 
 export type SubscriptionState = {
   status: "active" | undefined | "inactive";
-  role: string | null;
-  tier: string | null;
+  role: string | undefined | null;
+  tier: string | undefined | null;
   setSubscription: (
     status: SubscriptionState["status"],
     role: string,

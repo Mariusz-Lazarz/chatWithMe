@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { signIn, signOut } from "next-auth/react";
 import { Button } from "./button";
 import { Session } from "next-auth";
+import ProIcon from "./ProIcon";
 
 export default function ProfileAvatar({
   session,
@@ -44,9 +45,9 @@ export default function ProfileAvatar({
           {session.user?.name || "My profile"}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Billing</DropdownMenuItem>
-        <DropdownMenuItem>Team</DropdownMenuItem>
+        <DropdownMenuItem>
+          <ProIcon />
+        </DropdownMenuItem>
         <DropdownMenuItem>Subscription</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>

@@ -64,13 +64,13 @@ export default function RegisterButton({
       disabled={loading || status === undefined}
     >
       {loading ? (
-        <LoadingSpinner />
+        <LoadingSpinner width="6" height="6" />
       ) : status === "active" ? (
         "Manage your subscription"
       ) : status === "inactive" ? (
         "Sign In"
       ) : (
-        <LoadingSpinner />
+        <LoadingSpinner width="6" height="6" />
       )}
     </Button>
   );
