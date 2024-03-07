@@ -3,8 +3,6 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
-import { db } from "@/lib/firebase";
-import { addDoc, collection, doc, setDoc, getDoc } from "firebase/firestore";
 import { useSession } from "next-auth/react";
 
 export default function NavButtons() {
