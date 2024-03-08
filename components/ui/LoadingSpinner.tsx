@@ -1,3 +1,5 @@
+import { ReloadIcon } from "@radix-ui/react-icons";
+
 export default function LoadingSpinner({
   width,
   height,
@@ -7,9 +9,7 @@ export default function LoadingSpinner({
 }) {
   return (
     <div className="flex justify-center items-center">
-      <div
-        className={`animate-spin rounded-full h-${height} w-${width} border-2 border-gray-300 border-t-gray-900`}
-      ></div>
+      <ReloadIcon className={` h-${height} w-${width} animate-spin`} />
     </div>
   );
 }

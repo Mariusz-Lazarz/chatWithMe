@@ -14,7 +14,7 @@ import { Button } from "./button";
 import { Session } from "next-auth";
 import ProIcon from "./ProIcon";
 import useSubscriptionStore from "@/store/subscriptionStore";
-import { useToast } from "./use-toast";
+import { useToast } from "./use-toast"
 
 export default function ProfileAvatar({
   session,

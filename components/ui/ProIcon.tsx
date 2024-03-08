@@ -4,7 +4,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import Link from "next/link";
 
 export default function ProIcon() {
-  const { status, role, tier } = useSubscriptionStore();
+  const { tier } = useSubscriptionStore();
   return (
     <span className="flex items-center gap-2 font-bold">
       {tier === undefined ? (
