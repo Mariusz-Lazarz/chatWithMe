@@ -78,6 +78,20 @@
   }
 }
 
+.chat {
+  height: 68vh;
+}
+
+.chatText {
+  max-width: 50%;
+}
+
+@media (max-width: 768px) {
+  .chatText {
+    max-width: 100%;
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
