@@ -3,13 +3,17 @@ import { useParams } from "next/navigation";
 import { ShareLinkButton } from "@/components/ui/chat/ShareLinkButton";
 import { DeleteButton } from "@/components/ui/chat/DeleteButton";
 import { AddUserButton } from "@/components/ui/chat/AddUserButton";
-
 import ChatUser from "@/components/ui/chat/ChatUser";
 import SendMessage from "@/components/ui/chat/SendMessage";
 import ChatMessage from "@/components/ui/chat/ChatMessage";
+import { useEffect } from "react";
+import { getChatParticipants } from "@/lib/firebaseFunctions";
 
 export default function ChatWithId() {
   const { chatId } = useParams<{ chatId: string }>();
+  useEffect(() => {
+    getChatParticipants(chatId);
+  }, [chatId]);
   return (
     <div className="flex flex-col h-screen">
       <div className="flex justify-end p-4">
@@ -22,10 +26,12 @@ export default function ChatWithId() {
       <div className="flex gap-4 overflow-x-auto border-2 rounded-full p-2 my-6">
         <ChatUser />
       </div>
-      <div className="flex flex-col gap-4 flex-grow overflow-y-auto p-4">
-        <ChatMessage />
-      </div>
-      <SendMessage />
+      <>
+        <div className="flex flex-col gap-4 flex-grow overflow-y-auto p-4">
+          <ChatMessage />
+        </div>
+        <SendMessage />
+      </>
     </div>
   );
 }

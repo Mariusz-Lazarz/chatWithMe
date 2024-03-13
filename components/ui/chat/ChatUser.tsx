@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function ChatUser() {
+  
   return (
     <div className="w-fit rounded-full p-2 flex items-center gap-2 bg-secondary">
       <Avatar>
