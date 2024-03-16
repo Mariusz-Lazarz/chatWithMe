@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { TrashIcon } from "@heroicons/react/24/solid";
 
-export function DeleteButton() {
+export function DeleteButton({ chatId }: { chatId: string }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -27,7 +27,9 @@ export function DeleteButton() {
           </DialogDescription>
         </DialogHeader>
         <div className="flex items-center space-x-2">
-          <Button variant="destructive">Delete</Button>
+          <Button variant="destructive">
+            Delete
+          </Button>
           <DialogClose>
             <Button variant="secondary">Cancel</Button>
           </DialogClose>

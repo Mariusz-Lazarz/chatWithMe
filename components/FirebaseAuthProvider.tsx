@@ -10,9 +10,7 @@ async function syncFirebaseAuth(session: Session) {
   if (session && session.firebaseToken) {
     try {
       await signInWithCustomToken(auth, session.firebaseToken);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   } else {
     auth.signOut;
   }
