@@ -2,7 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/firebase";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  setDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -13,7 +19,7 @@ export default function ChatPage() {
     if (!session) return;
     try {
       const chatDocRef = await addDoc(collection(db, "chats"), {
-        createdAt: new Date(),
+        createdAt: serverTimestamp(),
         adminId: session.user?.id,
       });
 
@@ -21,6 +27,14 @@ export default function ChatPage() {
         doc(db, `chats/${chatDocRef.id}/participants`, session.user?.id),
         {
           userId: session.user?.id,
+        }
+      );
+
+      await setDoc(
+        doc(db, `users/${session.user?.id}/chatIds`, chatDocRef.id),
+        {
+          chatId: chatDocRef.id,
+          joinedAt: serverTimestamp(),
         }
       );
 

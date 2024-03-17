@@ -11,24 +11,28 @@ import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
 import { getDoc, doc } from "firebase/firestore";
 import ChatSkeleton from "@/components/ui/chat/ChatSkeleton";
+import { getChatParticipants } from "@/lib/firebaseFunctions";
 export default function ChatWithId() {
   const { chatId } = useParams<{ chatId: string }>();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | undefined>(undefined);
+  const [currentChatId, setCurrentChatId] = useState<string>("");
   useEffect(() => {
     const checkChatExists = async () => {
       setIsLoading(true);
       try {
         if (!chatId) return;
+        setIsLoading(false);
         const chatDocRef = doc(db, "chats", chatId);
-        await getDoc(chatDocRef);
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError("Unexpected error");
+        const docSnap = await getDoc(chatDocRef);
+        if (docSnap.exists()) {
+          setCurrentChatId(chatId);
+          const participants = await getChatParticipants(chatId);
+          console.log(participants);
         }
+      } catch (error) {
+        setError(error as Error);
       }
       setIsLoading(false);
     };
@@ -39,8 +43,13 @@ export default function ChatWithId() {
   if (isLoading) {
     return <ChatSkeleton />;
   }
-  if (error === "Missing or insufficient permissions.") {
-    return <h1>404 - Page Not Found</h1>;
+  if (error) {
+    return (
+      <div className="text-center">
+        <h1 className="text-2xl">Oops!! Something went wrong</h1>
+        <h1>{error.message}</h1>
+      </div>
+    );
   }
   return (
     <div className="flex flex-col h-screen">
@@ -48,7 +57,7 @@ export default function ChatWithId() {
         <div className="flex gap-4">
           <AddUsers />
           <ShareLinkButton />
-          <DeleteButton chatId={chatId} />
+          <DeleteButton currentChatId={currentChatId} />
         </div>
       </div>
       <div className="flex gap-4 overflow-x-auto border-2 rounded-full p-2 my-6">
