@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
 import { getDoc, doc } from "firebase/firestore";
 import ChatSkeleton from "@/components/ui/chat/ChatSkeleton";
-import { getChatParticipants } from "@/lib/firebaseFunctions";
+import { getChatParticipants, getChatMessages } from "@/lib/firebaseFunctions";
 export default function ChatWithId() {
   const { chatId } = useParams<{ chatId: string }>();
   const router = useRouter();
@@ -28,8 +28,17 @@ export default function ChatWithId() {
         const docSnap = await getDoc(chatDocRef);
         if (docSnap.exists()) {
           setCurrentChatId(chatId);
-          const participants = await getChatParticipants(chatId);
-          console.log(participants);
+
+          try {
+            const [participants, messages] = await Promise.all([
+              getChatParticipants(chatId),
+              getChatMessages(chatId),
+            ]);
+
+            console.log(participants, messages);
+          } catch (error) {
+            console.error(error);
+          }
         }
       } catch (error) {
         setError(error as Error);
@@ -67,7 +76,7 @@ export default function ChatWithId() {
         <div className="flex flex-col gap-4 flex-grow overflow-y-auto p-4">
           <ChatMessage />
         </div>
-        <SendMessage />
+        <SendMessage chatId={chatId} />
       </>
     </div>
   );
