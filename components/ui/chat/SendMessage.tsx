@@ -27,7 +27,7 @@ export default function SendMessage({ chatId }: { chatId: string }) {
     <form className="flex gap-4 p-4" onSubmit={(e) => sendMessageHandler(e)}>
       <Input
         placeholder="Type in message in ANY language"
-        className="flex-grow"
+        className="flex-grow outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
         onChange={(e) => messageInputHandler(e)}
         value={message}
       ></Input>

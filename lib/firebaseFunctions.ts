@@ -1,12 +1,6 @@
 import { db } from "@/lib/firebase";
-import {
-  collection,
-  getDocs,
-  doc,
-  getDoc,
-  setDoc,
-  addDoc,
-} from "firebase/firestore";
+import { collection, getDocs, doc, getDoc, addDoc } from "firebase/firestore";
+import { ChatParticipant, ChatMessage } from "./definitions";
 
 async function getChatParticipantsIds(chatId: string) {
   const participantsCollectionRef = collection(
@@ -34,12 +28,14 @@ async function getUserData(userId: string) {
   }
 }
 
-export const getChatParticipants = async (chatId: string) => {
+export const getChatParticipants = async (
+  chatId: string
+): Promise<ChatParticipant[]> => {
   try {
     const participantIds = await getChatParticipantsIds(chatId);
     const usersPromises = participantIds.map(getUserData);
     const users = await Promise.all(usersPromises);
-    return users.filter((user) => user !== null);
+    return users.filter((user): user is ChatParticipant => user !== null);
   } catch (error) {
     throw error;
   }
@@ -65,12 +61,31 @@ export const sendChatMessage = async (
   }
 };
 
-export const getChatMessages = async (chatId: string) => {
+export const getChatMessages = async (
+  chatId: string
+): Promise<ChatMessage[]> => {
   const chatRef = collection(db, "chats", chatId, "messages");
   const chatSnap = await getDocs(chatRef);
   if (chatSnap.empty) {
-    console.log("no message");
+    console.log("No messages");
     return [];
   }
-  return chatSnap.docs.map((doc) => doc.data());
+
+  const messagesWithId = chatSnap.docs.map((doc) => ({
+    id: doc.id,
+    ...(doc.data() as ChatMessage),
+  }));
+
+  const sortedMessages = messagesWithId.sort((a, b) => {
+    const timeA =
+      (a.createdAt.seconds as number) * 1000 +
+      (a.createdAt.nanoseconds as number) / 1000000;
+    const timeB =
+      (b.createdAt.seconds as number) * 1000 +
+      (b.createdAt.nanoseconds as number) / 1000000;
+
+    return timeA - timeB;
+  });
+
+  return sortedMessages;
 };

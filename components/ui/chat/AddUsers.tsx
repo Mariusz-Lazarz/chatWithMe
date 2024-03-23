@@ -11,9 +11,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
-import AddUserButton from "./AddUserButton";
+import { useState } from "react";
 
 export function AddUsers() {
+  const [userEmail, setUserEmail] = useState<string>("");
+  const userEmailInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserEmail(e.target.value.toLocaleLowerCase());
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -37,11 +41,14 @@ export function AddUsers() {
             <Input
               id="link"
               placeholder="User email (needs to be registered)"
+              onChange={(e) => userEmailInputHandler(e)}
             />
           </div>
         </div>
         <DialogFooter className="sm:justify-start">
-          <AddUserButton />
+          <Button className="w-fit" onClick={() => console.log(userEmail)}>
+            Add user
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

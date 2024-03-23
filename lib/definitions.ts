@@ -24,3 +24,18 @@ export type SubscriptionState = {
   ) => void;
   clearSubscription: () => void;
 };
+
+export type ChatParticipant = {
+  name: string;
+  email: string;
+  image: string;
+  id: string;
+  emailVerified: null;
+};
+
+export type ChatMessage = {
+  id: string;
+  createdAt: { seconds: Number; nanoseconds: Number };
+  message: string;
+  userId: string;
+};
