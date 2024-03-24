@@ -11,7 +11,7 @@ export default function SubscriptionProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const { setSubscription, clearSubscription } = useSubscriptionStore();
 
   useEffect(() => {

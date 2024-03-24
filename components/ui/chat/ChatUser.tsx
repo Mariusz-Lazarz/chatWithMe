@@ -10,7 +10,7 @@ export default function ChatUser({
 }) {
   return (
     <div className="w-fit rounded-full px-4 py-2 flex items-center gap-2 bg-secondary">
-      <Avatar>
+      <Avatar className="h-8 w-8">
         <AvatarImage src={user.image} />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>

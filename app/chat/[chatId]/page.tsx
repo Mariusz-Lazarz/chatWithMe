@@ -23,7 +23,6 @@ import {
   ChatMessage as ChatMessageType,
   ChatParticipant,
 } from "@/lib/definitions";
-import useSubscriptionStore from "@/store/subscriptionStore";
 export default function ChatWithId() {
   const { chatId } = useParams<{ chatId: string }>();
   const router = useRouter();
@@ -104,11 +103,12 @@ export default function ChatWithId() {
       </div>
     );
   }
+  console.log(chatParticipants);
   return (
     <div className="chat flex flex-col ">
       <div className="flex justify-end p-4">
         <div className="flex gap-4">
-          <AddUsers />
+          <AddUsers chatId={chatId} />
           <ShareLinkButton />
           <DeleteButton currentChatId={currentChatId} />
         </div>
