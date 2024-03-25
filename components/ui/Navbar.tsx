@@ -19,6 +19,12 @@ export default async function Navbar() {
           <nav className="flex justify-between items-center">
             <Logo />
             <div className="flex items-center gap-1 md:gap-2">
+              {!session && (
+                <Link href="#" className="text-sm">
+                  Pricing
+                </Link>
+              )}
+              <ModeToggle />
               {session && (
                 <Link href="/chat">
                   <Button
@@ -31,12 +37,6 @@ export default async function Navbar() {
                 </Link>
               )}
               {session && <LanguageDropdown />}
-              {!session && (
-                <Link href="#" className="text-sm">
-                  Pricing
-                </Link>
-              )}
-              <ModeToggle />
               <ProfileAvatar session={session} />
             </div>
           </nav>

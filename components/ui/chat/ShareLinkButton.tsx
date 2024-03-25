@@ -13,8 +13,34 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ShareIcon } from "@heroicons/react/24/solid";
-
+import { useRef } from "react";
+import { useToast } from "../use-toast";
 export function ShareLinkButton() {
+  const { toast } = useToast();
+  const inputRef = useRef(null);
+
+  const copyToClipboard = async () => {
+    if (inputRef.current) {
+      const url = (inputRef.current as HTMLInputElement).value;
+      try {
+        await navigator.clipboard.writeText(url);
+        toast({
+          title: "Success",
+          description: "URL copied to clipboard!",
+          variant: "success",
+          duration: 1000,
+        });
+      } catch (err) {
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "Failed to copy!",
+          variant: "destructive",
+          duration: 1000,
+        });
+      }
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -37,11 +63,19 @@ export function ShareLinkButton() {
             </Label>
             <Input
               id="link"
-              defaultValue="https://ui.shadcn.com/docs/installation"
+              ref={inputRef}
+              defaultValue={
+                typeof window !== "undefined" ? window.location.href : ""
+              }
               readOnly
             />
           </div>
-          <Button type="submit" size="sm" className="px-3">
+          <Button
+            type="button"
+            size="sm"
+            className="px-3"
+            onClick={copyToClipboard}
+          >
             <span className="sr-only">Copy</span>
             <CopyIcon className="h-4 w-4" />
           </Button>
