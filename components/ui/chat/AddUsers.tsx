@@ -21,9 +21,11 @@ import {
 } from "firebase/firestore";
 import { useState } from "react";
 import { useToast } from "../use-toast";
+import { useRouter } from "next/navigation";
 
 export function AddUsers({ chatId }: { chatId: string }) {
   const { toast } = useToast();
+  const router = useRouter();
   const [userEmail, setUserEmail] = useState<string>("");
   const userEmailInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserEmail(e.target.value.toLocaleLowerCase());
@@ -53,6 +55,7 @@ export function AddUsers({ chatId }: { chatId: string }) {
         duration: 1000,
       });
       setUserEmail("");
+      location.reload();
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast({

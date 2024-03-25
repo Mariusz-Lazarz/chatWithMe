@@ -8,6 +8,7 @@ import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import UpgradeBanner from "./UpgradeBanner";
+import CreateChatButton from "./chat/CreateChatButton";
 
 export default async function Navbar() {
   const session = await getServerSession(authOptions);
@@ -36,6 +37,7 @@ export default async function Navbar() {
                   </Button>
                 </Link>
               )}
+              {session && <CreateChatButton />}
               {session && <LanguageDropdown />}
               <ProfileAvatar session={session} />
             </div>

@@ -1,6 +1,5 @@
 "use client";
-
-import { Button } from "@/components/ui/button";
+import { Button } from "../button";
 import { db } from "@/lib/firebase";
 import {
   addDoc,
@@ -12,7 +11,7 @@ import {
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useToast } from "../use-toast";
-import LoadingSpinner from "../LoadingSpinner";
+import { MessageSquarePlus } from "lucide-react";
 
 export default function CreateChatButton() {
   const { data: session } = useSession();
@@ -60,5 +59,9 @@ export default function CreateChatButton() {
     }
   };
 
-  return <Button onClick={() => createChat()}>Create chat</Button>;
+  return (
+    <Button variant="outline" size="icon" onClick={() => createChat()}>
+      <MessageSquarePlus size="1.5rem" />
+    </Button>
+  );
 }

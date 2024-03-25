@@ -48,8 +48,8 @@ export function DeleteButton({ currentChatId }: { currentChatId: string }) {
       );
 
       const allDeletions = [
-        deleteDoc(chatDocRef),
         ...deleteParticipantsPromises,
+        deleteDoc(chatDocRef),
         deleteDoc(chatsRef),
       ];
       await Promise.all(allDeletions);

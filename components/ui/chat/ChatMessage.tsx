@@ -14,7 +14,6 @@ export default function ChatMessage({
   user: ChatParticipant | undefined;
 }) {
   const { data: session } = useSession();
-  console.log(session?.user);
   return (
     <div
       className={`flex flex-row items-center gap-2 ${

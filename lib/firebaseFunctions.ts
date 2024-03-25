@@ -11,7 +11,6 @@ async function getChatParticipantsIds(chatId: string) {
   );
   const participantsSnap = await getDocs(participantsCollectionRef);
   if (participantsSnap.empty) {
-    console.log("No participants found!");
     return [];
   }
   return participantsSnap.docs.map((doc) => doc.id);
@@ -23,7 +22,6 @@ async function getUserData(userId: string) {
   if (userSnap.exists()) {
     return { id: userSnap.id, ...userSnap.data() };
   } else {
-    console.log(`User not found: ${userId}`);
     return null;
   }
 }
@@ -55,7 +53,6 @@ export const sendChatMessage = async (
       userId: userId,
       createdAt: new Date(),
     });
-    console.log(`sukces`);
   } catch (error) {
     throw new Error("Nie udało się wysłać wiadomości: " + error);
   }
@@ -67,7 +64,6 @@ export const getChatMessages = async (
   const chatRef = collection(db, "chats", chatId, "messages");
   const chatSnap = await getDocs(chatRef);
   if (chatSnap.empty) {
-    console.log("No messages");
     return [];
   }
 
