@@ -103,7 +103,6 @@ export default function ChatWithId() {
       </div>
     );
   }
-  console.log(chatParticipants);
   return (
     <div className="chat flex flex-col ">
       <div className="flex justify-end p-4">

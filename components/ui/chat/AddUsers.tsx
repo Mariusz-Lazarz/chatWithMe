@@ -20,8 +20,10 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { useState } from "react";
+import { useToast } from "../use-toast";
 
 export function AddUsers({ chatId }: { chatId: string }) {
+  const { toast } = useToast();
   const [userEmail, setUserEmail] = useState<string>("");
   const userEmailInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserEmail(e.target.value.toLocaleLowerCase());
@@ -36,7 +38,7 @@ export function AddUsers({ chatId }: { chatId: string }) {
       if (querySnap.docs.length > 0) {
         userId = querySnap.docs[0].id;
       }
-      if (!userId) return;
+      if (!userId) throw new Error("User with such email does not exist.");
       await Promise.all([
         setDoc(doc(db, `chats/${chatId}/participants`, userId), { userId }),
         setDoc(doc(db, `users/${userId}/chatIds`, chatId), {
@@ -44,9 +46,29 @@ export function AddUsers({ chatId }: { chatId: string }) {
           joinedAt: serverTimestamp(),
         }),
       ]);
+      toast({
+        title: "Success",
+        description: "User has been added successfully",
+        variant: "success",
+        duration: 1000,
+      });
       setUserEmail("");
-    } catch (error) {
-      console.log(error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: error.message,
+          variant: "destructive",
+          duration: 1000,
+        });
+      } else {
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "An unexpected error occurred.",
+          variant: "destructive",
+          duration: 1000,
+        });
+      }
     }
   };
   return (
