@@ -12,15 +12,12 @@ export default function SendMessage({ chatId }: { chatId: string }) {
   };
   const sendMessageHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!session?.user.id) return;
     try {
-      if (session?.user.id) {
-        sendChatMessage(chatId, message, session.user.id);
-        setMessage("");
-      } else {
-        throw new Error("Try again later");
-      }
+      sendChatMessage(chatId, message, session.user.id);
+      setMessage("");
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   };
   return (

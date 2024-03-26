@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -7,8 +7,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { GlobeAltIcon } from "@heroicons/react/24/solid";
+import useSubscriptionStore from "@/store/languageStore";
+
+const LANGUAGES = ["en", "pl", "de"];
 
 export default function LanguageDropdown() {
+  const { setLanguage } = useSubscriptionStore();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -21,9 +25,11 @@ export default function LanguageDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-0">
-        <DropdownMenuItem>EN</DropdownMenuItem>
-        <DropdownMenuItem>PL</DropdownMenuItem>
-        <DropdownMenuItem>DE</DropdownMenuItem>
+        {LANGUAGES.map((language, i) => (
+          <DropdownMenuItem key={i} onClick={() => setLanguage(language)}>
+            {language.toLocaleUpperCase()}
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -39,3 +39,17 @@ export type ChatMessage = {
   message: string;
   userId: string;
 };
+
+export type LanguageState = {
+  language: string;
+  setLanguage: (language: string) => void;
+};
+
+export type ChatPreview = {
+  adminName: string;
+  adminImage: string;
+  lastMessage: string;
+  createdAt: string;
+  userId: string;
+  chatId: string;
+};
