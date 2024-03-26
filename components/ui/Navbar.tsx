@@ -21,7 +21,7 @@ export default async function Navbar() {
             <Logo />
             <div className="flex items-center gap-1 md:gap-2">
               {!session && (
-                <Link href="#" className="text-sm">
+                <Link href="/pricing" className="text-sm">
                   Pricing
                 </Link>
               )}

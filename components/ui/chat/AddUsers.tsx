@@ -55,7 +55,6 @@ export function AddUsers({ chatId }: { chatId: string }) {
         duration: 1000,
       });
       setUserEmail("");
-      location.reload();
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast({
