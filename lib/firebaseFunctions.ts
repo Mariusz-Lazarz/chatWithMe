@@ -68,8 +68,8 @@ export const getChatMessages = async (
   }
 
   const messagesWithId = chatSnap.docs.map((doc) => ({
-    id: doc.id,
     ...(doc.data() as ChatMessage),
+    id: doc.id,
   }));
 
   const sortedMessages = messagesWithId.sort((a, b) => {
