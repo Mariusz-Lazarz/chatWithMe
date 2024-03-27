@@ -109,10 +109,10 @@ export default function ChatWithId() {
         <div className="flex gap-4">
           <AddUsers chatId={chatId} />
           <ShareLinkButton />
-          <DeleteButton currentChatId={currentChatId} />
+          <DeleteButton currentChatId={currentChatId} adminId={adminId} />
         </div>
       </div>
-      <div className="flex gap-4 border-2 rounded-full p-2 mb-2">
+      <div className="flex gap-4 border-2 rounded-lg p-2 mb-2 overflow-x-auto">
         {chatParticipants.map((user, i) => (
           <ChatUser key={i} user={user} adminId={adminId} />
         ))}

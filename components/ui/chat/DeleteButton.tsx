@@ -16,7 +16,13 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useToast } from "../use-toast";
 
-export function DeleteButton({ currentChatId }: { currentChatId: string }) {
+export function DeleteButton({
+  currentChatId,
+  adminId,
+}: {
+  currentChatId: string;
+  adminId: string;
+}) {
   const { data: session } = useSession();
   const router = useRouter();
   const { toast } = useToast();
@@ -25,31 +31,42 @@ export function DeleteButton({ currentChatId }: { currentChatId: string }) {
       return;
     }
     try {
+      if (session?.user.id !== adminId) {
+        throw new Error("You don`t have required permission to do that!");
+      }
       toast({
         title: "...Working",
         description: "We're deleting your chat...",
       });
-      const chatDocRef = doc(
-        db,
-        "users",
-        session.user.id,
-        "chatIds",
-        currentChatId
-      );
       const participantsCollectionRef = collection(
         db,
         `chats/${currentChatId}/participants`
       );
+      const messagesCollectionRef = collection(
+        db,
+        `chats/${currentChatId}/messages`
+      );
       const chatsRef = doc(db, "chats", currentChatId);
 
       const querySnapshot = await getDocs(participantsCollectionRef);
+      const querySnapshot1 = await getDocs(messagesCollectionRef);
+      const participantsIds = querySnapshot.docs.map((doc) => doc.id);
+
+      const deleteChatForParticipantPromises = participantsIds.map((id) => {
+        deleteDoc(doc(db, "users", id, "chatIds", currentChatId));
+      });
       const deleteParticipantsPromises = querySnapshot.docs.map((doc) =>
         deleteDoc(doc.ref)
       );
+      const deleteMessagesPromises = querySnapshot1.docs.map((doc) => {
+        deleteDoc(doc.ref);
+      });
 
       const allDeletions = [
         ...deleteParticipantsPromises,
-        deleteDoc(chatDocRef),
+        ...deleteMessagesPromises,
+        ...deleteChatForParticipantPromises,
+        // deleteDoc(chatDocRef),
         deleteDoc(chatsRef),
       ];
       await Promise.all(allDeletions);
@@ -62,10 +79,15 @@ export function DeleteButton({ currentChatId }: { currentChatId: string }) {
       setTimeout(() => {
         router.push("/chat");
       }, 1000);
-    } catch (error) {
+    } catch (error: unknown) {
+      let errorMessage =
+        "An unexpected error occurred. Please try again later.";
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
       toast({
         title: "Uh oh! Something went wrong.",
-        description: "Failed to delete chat. Please try again later!",
+        description: errorMessage,
         variant: "destructive",
         duration: 1000,
       });

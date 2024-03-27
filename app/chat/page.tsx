@@ -31,9 +31,18 @@ export default function ChatPage() {
         const chatsSnap = await getDocs(chatsRef);
         const chatIds = chatsSnap.docs.map((doc) => doc.data().chatId);
 
+        console.log("Retrieved chat IDs:", chatIds);
+
         const chatPreviewsPromises = chatIds.map(async (chatId) => {
           const chatDocRef = doc(db, `chats/${chatId}`);
           const chatDocSnap = await getDoc(chatDocRef);
+
+          console.log(
+            "Retrieved chat document for chat ID:",
+            chatId,
+            "Snapshot:",
+            chatDocSnap.exists()
+          );
 
           let adminName = "";
           let adminImage = "";
@@ -56,6 +65,13 @@ export default function ChatPage() {
             limit(1)
           );
           const lastMessageSnap = await getDocs(lastMessageQuery);
+          console.log(
+            "Retrieved last message snapshot for chat ID:",
+            chatId,
+            "Snapshot:",
+            lastMessageSnap.empty
+          );
+
           let lastMessageData = {
             lastMessage: "",
             createdAt: "",
@@ -79,6 +95,8 @@ export default function ChatPage() {
         });
 
         const resolvedChatPreviews = await Promise.all(chatPreviewsPromises);
+        console.log("Resolved chat previews:", resolvedChatPreviews);
+
         setChatPreviews(resolvedChatPreviews);
       } catch (error) {
         console.error("Error fetching chat data:", error);
